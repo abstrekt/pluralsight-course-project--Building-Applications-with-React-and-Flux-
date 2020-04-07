@@ -1,23 +1,27 @@
 import React from "react";
-import { render } from "react-dom";
-import HomePage from './HomePage';
-import AboutPage from './AboutPage';
-import Header from './common/Header';
-import CoursePage from './CoursePage';
+import HomePage from "./HomePage";
+import AboutPage from "./AboutPage";
+import Header from "./common/Header";
+import CoursePage from "./CoursePage";
+import { Route, Switch, Redirect } from "react-router-dom";
+import NotFoundPage from "./NotFoundPage";
+import ManageCoursePage from "./ManageCoursePage";
 
-function App () {
-    function getPage() {
-        const route = window.location.pathname;
-        if (route === "/courses") return <CoursePage />;
-        if (route === "/about") return <AboutPage />;
-        return <HomePage/>;
-    }
-    return (
+function App() {
+  return (
     <div className="container-fluid">
-        <Header />
-        {getPage()}
+      <Header />
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/Courses" component={CoursePage} />
+        <Route path="/About" component={AboutPage} />
+        <Route path="/course/:slug" component={ManageCoursePage} />
+        <Route path="/course" component={ManageCoursePage} />
+        <Redirect from="/About-Page" to="/About" />
+        <Route component={NotFoundPage} />
+      </Switch>
     </div>
-    );
+  );
 }
 
 export default App;
